@@ -1,0 +1,71 @@
+html {
+    height: 100%;
+    margin: 0em;
+    padding: 0em;
+}
+
+body {
+	font-size: 62.5%; /* Resets 1em to 10px */
+	line-height: 150%;
+	margin: 0px;
+	font-family: Helvetica, Arial, Sans-Serif;
+}
+
+p { 
+	font-size: 120%;
+}
+
+a {
+	font-weight: bold;
+        text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;	
+}
+
+input {
+    vertical-align: middle;	
+}
+
+form p {
+    clear: both;
+    padding: 0.5em 0em;
+}
+
+table, tr, th, td {
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;   
+}
+
+table {
+    font-size: 120%;
+    margin: 0px auto 1em; 	
+}
+
+th, td {
+    padding: 4px 10px;	
+}
+
+#page {
+    height: 100%;
+    margin: 0em auto 2em;
+    padding: 0em 0em 2em;
+    position: relative;
+    width: 960px;
+}
+
+#content {
+    padding: 1em;	
+}
+
+#copyright {
+    position: absolute;
+    text-align: center;
+    left: 0em;
+    bottom: 0em;
+    width: 100%;
+    padding: 1em 0em;
+    font-size: 120%;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+  <filter>
+    <blacklist>
+      <directory suffix=".php">/usr/share/php/libzend-framework-php</directory>
+      <directory suffix=".php">/opt/cruisecontrol/projects/traction/source/tests</directory>
+    </blacklist>
+  </filter>
+</phpunit>

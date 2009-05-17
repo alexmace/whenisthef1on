@@ -1,0 +1,44 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/base/base-min.css" />
+    <link href="/styles/main.css" type="text/css" rel="stylesheet" />
+    <?php echo $this->headLink( ) ?>
+    <title>When Is The F1 On?</title>
+    <script src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      // Load jQuery
+      google.load( "jquery", "1.3" );
+      google.load( "jqueryui", "1.7" );
+    </script>
+    <script type="text/javascript" src="/scripts/mootools-1.2-core-yc.js"></script>
+    <script type="text/javascript" src="/scripts/mootools-1.2-more.js"></script>
+    <script type="text/javascript" src="/scripts/traction.js"></script>
+    <?php echo $this->headScript( ) ?>
+
+  </head>
+
+  <body>
+
+    <div id="page">
+
+      <div id="header">
+
+
+      </div>
+      
+      <div id="content">
+
+        <?php echo $this->layout( )->content ?>
+        
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
