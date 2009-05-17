@@ -2,7 +2,7 @@
 
 require_once( 'PHPUnit/Framework.php' );
 
-class Traction_FormTest extends PHPUnit_Framework_TestCase
+class WhenIsTheF1On_FormTest extends PHPUnit_Framework_TestCase
 {
 
     public function test__Construct( )

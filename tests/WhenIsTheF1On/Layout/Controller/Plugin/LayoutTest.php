@@ -2,10 +2,10 @@
 
 require_once( 'PHPUnit/Framework.php' );
 
-class Traction_Form_Decorator_LabelErrorTest extends PHPUnit_Framework_TestCase
+class WhenIsTheF1On_Layout_Controller_Plugin_LayoutTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testGetLabel( )
+    public function testPreDispatch( )
     {
 
         // Not implemented yet
