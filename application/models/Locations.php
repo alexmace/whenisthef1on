@@ -27,17 +27,31 @@ class Locations extends Zend_Db_Table_Abstract
      * @param string $programmeId
      * @param string $type
      * @param string $url
+     * @param string $start
+     * @param string $duration
      */
-    public function store( $programmeId, $type, $url )
+    public function store( $programmeId, $type, $url, $start, $duration )
     {
 
         // Set the data we're going to pass to the database.
         $data = array( 'programmeId' => $programmeId,
                        'type'        => $type,
-                       'url'         => $url );
+                       'url'         => $url,
+                       'start'       => $start,
+                       'duration'    => $duration );
 
         // Save it to the database
         $this->insert( $data );
+
+    }
+
+    /**
+     * Removes all of the entries in the table
+     */
+    public function removeAll( )
+    {
+
+        $this->delete( '' );
 
     }
 

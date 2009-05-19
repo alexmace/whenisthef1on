@@ -1,12 +1,39 @@
 <dataset>
 
   <!-- Broadcasts -->
-  <broadcasts />
+  <table name="broadcasts">
+    <column>programmeId</column>
+    <column>channelId</column>
+    <column>start</column>
+    <column>duration</column>
+  </table>
+
+  <!-- Channels -->
+  <table name="channels">
+    <column>channelId</column>
+    <column>name</column>
+  </table>
 
   <!-- Locations -->
-  <locations />
+  <table name="locations">
+    <column>programmeId</column>
+    <column>type</column>
+    <column>url</column>
+    <column>start</column>
+    <column>duration</column>
+  </table>
+
+  <!-- Logos -->
+  <table name="logos">
+    <column>channelId</column>
+    <column>url</column>
+  </table>
 
   <!-- Programmes -->
-  <programmes />
+  <table name="programmes">
+    <column>programmeId</column>
+    <column>title</column>
+    <column>synopsis</column>
+  </table>
   
 </dataset>

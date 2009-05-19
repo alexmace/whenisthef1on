@@ -41,4 +41,14 @@ class Programmes extends Zend_Db_Table_Abstract
 
     }
 
+    /**
+     * Removes all of the entries in the table
+     */
+    public function removeAll( )
+    {
+
+        $this->delete( '' );
+
+    }
+
 }

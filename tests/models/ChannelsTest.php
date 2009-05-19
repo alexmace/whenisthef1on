@@ -4,14 +4,14 @@ require_once( 'PHPUnit/Extensions/Database/TestCase.php' );
 require_once( 'Zend/Config/Ini.php' );
 require_once( 'Zend/Db/Table.php' );
 require_once( 'Zend/Db/Table/Abstract.php' );
-require_once( 'models/Broadcasts.php' );
+require_once( 'models/Channels.php' );
 
 /**
- * Set of tests for the Broadcasts model
+ * Set of tests for the Channels model
  *
- * @see Broadcasts
+ * @see Channels
  */
-class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
+class ChannelsTest extends PHPUnit_Extensions_Database_TestCase
 {
 
     /**
@@ -79,27 +79,25 @@ class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * Tests that the store function accurately saves the broadcast information
-     * of a programme.
+     * Tests that the store function accurately saves the channel information
      */
     public function testStore( )
     {
 
         // Get an instance of the broadcasts model
-        $broadcasts = new Broadcasts( );
+        $channels = new Channels( );
 
         // Attempt to store the information about the broadcast
-        $broadcasts->store( 'crid://bbc.co.uk/1178643909', 'BBCRFiveX',
-                            '2009-05-21T07:55:00Z', '01:35:00' );
+        $channels->store( 'BBCTwo', 'BBC Two' );
 
         // Load up data file with data that should be in the database
         $xml_dataset = $this->createFlatXMLDataSet( dirname( __FILE__ )
                                                   . DIRECTORY_SEPARATOR . 'datasets'
-                                                  . DIRECTORY_SEPARATOR . 'basic-after-broadcast-stored.xml' );
+                                                  . DIRECTORY_SEPARATOR . 'basic-after-channel-stored.xml' );
 
         // Test that the broadcast has been recorded correctly
-        $this->assertTablesEqual( $xml_dataset->getTable( 'broadcasts' ),
-                                  $this->getConnection( )->createDataSet( )->getTable( 'broadcasts' ) );
+        $this->assertTablesEqual( $xml_dataset->getTable( 'channels' ),
+                                  $this->getConnection( )->createDataSet( )->getTable( 'channels' ) );
 
 
     }
@@ -111,33 +109,31 @@ class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
     public function testStoreDuplicate( )
     {
 
-        // Get an instance of the broadcasts model
-        $broadcasts = new Broadcasts( );
+        // Get an instance of the channels model
+        $channels = new Channels( );
 
         // Attempt to store the information about the broadcast
-        $broadcasts->store( 'crid://bbc.co.uk/1178643909', 'BBCRFiveX',
-                            '2009-05-21T07:55:00Z', '01:35:00' );
+        $channels->store( 'BBCTwo', 'BBC Two' );
 
         // Storing it again should cause an exception. Set the expected
         // exception then attempt to store it.
         $this->setExpectedException( 'Zend_Db_Statement_Exception' );
-        $broadcasts->store( 'crid://bbc.co.uk/1178643909', 'BBCRFiveX',
-                            '2009-05-21T07:55:00Z', '01:35:00' );
+        $channels->store( 'BBCTwo', 'BBC Two' );
 
     }
 
     /**
      * Tests that calling the RemoveAll function does indeed remove all of the
-     * broadcasts.
+     * channels.
      */
     public function testRemoveAll( )
     {
 
-        // Get an instance of the broadcasts model
-        $broadcasts = new Broadcasts( );
+        // Get an instance of the channels model
+        $channels = new Channels( );
 
-        // Remove all details of the broadcasts
-        $broadcasts->removeAll( );
+        // Remove all details of the channels
+        $channels->removeAll( );
 
         // Load up data file with data that should be in the database
         $xml_dataset = $this->createXMLDataSet( dirname( __FILE__ )
@@ -145,8 +141,8 @@ class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
                                               . DIRECTORY_SEPARATOR . 'empty.xml' );
 
         // Check that it is in fact empty
-        $this->assertTablesEqual( $xml_dataset->getTable( 'broadcasts' ),
-                                  $this->getConnection( )->createDataSet( )->getTable( 'broadcasts' ) );
+        $this->assertTablesEqual( $xml_dataset->getTable( 'channels' ),
+                                  $this->getConnection( )->createDataSet( )->getTable( 'channels' ) );
 
     }
 

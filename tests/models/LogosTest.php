@@ -4,14 +4,14 @@ require_once( 'PHPUnit/Extensions/Database/TestCase.php' );
 require_once( 'Zend/Config/Ini.php' );
 require_once( 'Zend/Db/Table.php' );
 require_once( 'Zend/Db/Table/Abstract.php' );
-require_once( 'models/Broadcasts.php' );
+require_once( 'models/Logos.php' );
 
 /**
- * Set of tests for the Broadcasts model
+ * Set of tests for the Logos model
  *
- * @see Broadcasts
+ * @see Logos
  */
-class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
+class LogosTest extends PHPUnit_Extensions_Database_TestCase
 {
 
     /**
@@ -79,27 +79,27 @@ class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     * Tests that the store function accurately saves the broadcast information
-     * of a programme.
+     * Tests that the store function accurately saves the logo information for
+     * the channel.
      */
     public function testStore( )
     {
 
-        // Get an instance of the broadcasts model
-        $broadcasts = new Broadcasts( );
+        // Get an instance of the logos model
+        $logos = new Logos( );
 
-        // Attempt to store the information about the broadcast
-        $broadcasts->store( 'crid://bbc.co.uk/1178643909', 'BBCRFiveX',
-                            '2009-05-21T07:55:00Z', '01:35:00' );
+        // Attempt to store the information about the logo
+        $logos->store( 'BBCTwo',
+                       'http://www0.rdthdo.bbc.co.uk/services/api/res/images/BBCTwo_small.gif' );
 
         // Load up data file with data that should be in the database
         $xml_dataset = $this->createFlatXMLDataSet( dirname( __FILE__ )
                                                   . DIRECTORY_SEPARATOR . 'datasets'
-                                                  . DIRECTORY_SEPARATOR . 'basic-after-broadcast-stored.xml' );
+                                                  . DIRECTORY_SEPARATOR . 'basic-after-logo-stored.xml' );
 
         // Test that the broadcast has been recorded correctly
-        $this->assertTablesEqual( $xml_dataset->getTable( 'broadcasts' ),
-                                  $this->getConnection( )->createDataSet( )->getTable( 'broadcasts' ) );
+        $this->assertTablesEqual( $xml_dataset->getTable( 'logos' ),
+                                  $this->getConnection( )->createDataSet( )->getTable( 'logos' ) );
 
 
     }
@@ -111,33 +111,33 @@ class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
     public function testStoreDuplicate( )
     {
 
-        // Get an instance of the broadcasts model
-        $broadcasts = new Broadcasts( );
+        // Get an instance of the logos model
+        $logos = new Logos( );
 
-        // Attempt to store the information about the broadcast
-        $broadcasts->store( 'crid://bbc.co.uk/1178643909', 'BBCRFiveX',
-                            '2009-05-21T07:55:00Z', '01:35:00' );
+        // Attempt to store the information about the logo
+        $logos->store( 'BBCTwo',
+                       'http://www0.rdthdo.bbc.co.uk/services/api/res/images/BBCTwo_small.gif' );
 
         // Storing it again should cause an exception. Set the expected
         // exception then attempt to store it.
         $this->setExpectedException( 'Zend_Db_Statement_Exception' );
-        $broadcasts->store( 'crid://bbc.co.uk/1178643909', 'BBCRFiveX',
-                            '2009-05-21T07:55:00Z', '01:35:00' );
+        $logos->store( 'BBCTwo',
+                       'http://www0.rdthdo.bbc.co.uk/services/api/res/images/BBCTwo_small.gif' );
 
     }
 
     /**
      * Tests that calling the RemoveAll function does indeed remove all of the
-     * broadcasts.
+     * logos.
      */
     public function testRemoveAll( )
     {
 
-        // Get an instance of the broadcasts model
-        $broadcasts = new Broadcasts( );
+        // Get an instance of the logos model
+        $logos = new Logos( );
 
-        // Remove all details of the broadcasts
-        $broadcasts->removeAll( );
+        // Remove all of the logos
+        $logos->removeAll( );
 
         // Load up data file with data that should be in the database
         $xml_dataset = $this->createXMLDataSet( dirname( __FILE__ )
@@ -145,8 +145,8 @@ class BroadcastsTest extends PHPUnit_Extensions_Database_TestCase
                                               . DIRECTORY_SEPARATOR . 'empty.xml' );
 
         // Check that it is in fact empty
-        $this->assertTablesEqual( $xml_dataset->getTable( 'broadcasts' ),
-                                  $this->getConnection( )->createDataSet( )->getTable( 'broadcasts' ) );
+        $this->assertTablesEqual( $xml_dataset->getTable( 'logos' ),
+                                  $this->getConnection( )->createDataSet( )->getTable( 'logos' ) );
 
     }
 

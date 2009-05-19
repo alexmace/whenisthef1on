@@ -1,0 +1,32 @@
+<dataset>
+
+  <!-- Broadcasts -->
+  <broadcasts programmeId="crid://bbc.co.uk/272956157" channelId="BBCOne"
+              start="2009-05-23 11:10:00" duration="02:05:00" />
+
+  <!-- Channels -->
+  <channels channelId="BBCOne" name="BBC One" />
+
+  <!-- Locations -->
+  <locations programmeId="crid://bbc.co.uk/272956157" type="multicast-real"
+             url="http://support.bbc.co.uk/multicast/rams/multi/bbcone.ram"
+             start="2009-05-23 11:10:00" duration="02:04:00" />
+  <locations programmeId="crid://bbc.co.uk/272956157" type="multicast-wmv"
+             url="http://support.bbc.co.uk/multicast/asx/bbcone.asx"
+             start="2009-05-23 11:10:00" duration="02:04:00" />
+  <locations programmeId="crid://bbc.co.uk/272956157" type="multicast-h264"
+             url="http://support.bbc.co.uk/multicast/sdp/bbcone-avc.sdp"
+             start="2009-05-23 11:10:00" duration="02:04:00" />
+
+  <!-- Logos -->
+  <logos channelId="BBCOne" url="http://www0.rdthdo.bbc.co.uk/services/api/res/images/BBCOne.gif" />
+  <logos channelId="BBCOne" url="http://www0.rdthdo.bbc.co.uk/services/api/res/images/BBCOne_small.gif" />
+
+  <!-- Programmes -->
+  <programmes programmeId="crid://bbc.co.uk/1178643909" title="Formula 1"
+              synopsis="Uninterrupted commentary on the first practice session for the Monaco Grand Prix. Go to bbc.co.uk/sportsextra for more info." />
+  <programmes programmeId="crid://bbc.co.uk/272956157"
+              title="Formula 1: The Monaco Grand Prix"
+              synopsis="Qualifying: Jake Humphrey hosts coverage of the Monaco Grand Prix qualifying session as the drivers battle for all-important track position on the notoriously narrow street circuit. [S]" />
+
+</dataset>

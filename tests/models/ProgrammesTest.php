@@ -40,7 +40,7 @@ class ProgrammesTest extends PHPUnit_Extensions_Database_TestCase
 
     	return $this->createFlatXMLDataSet( dirname( __FILE__ )
                                           . DIRECTORY_SEPARATOR . 'datasets'
-                                          . DIRECTORY_SEPARATOR . 'empty.xml' );
+                                          . DIRECTORY_SEPARATOR . 'basic.xml' );
 
     }
 
@@ -94,7 +94,7 @@ class ProgrammesTest extends PHPUnit_Extensions_Database_TestCase
         // Load up data file with data that should be in the database
         $xml_dataset = $this->createFlatXMLDataSet( dirname( __FILE__ )
                                                   . DIRECTORY_SEPARATOR . 'datasets'
-                                                  . DIRECTORY_SEPARATOR . 'empty-after-programme-stored.xml' );
+                                                  . DIRECTORY_SEPARATOR . 'basic-after-programme-stored.xml' );
 
         // Test that the broadcast has been recorded correctly
         $this->assertTablesEqual( $xml_dataset->getTable( 'programmes' ),
@@ -122,6 +122,30 @@ class ProgrammesTest extends PHPUnit_Extensions_Database_TestCase
         $this->setExpectedException( 'Zend_Db_Statement_Exception' );
         $programmes->store( 'crid://bbc.co.uk/1178643909', 'Formula 1',
                             'Uninterrupted commentary on the first practice session for the Monaco Grand Prix. Go to bbc.co.uk/sportsextra for more info.' );
+
+    }
+
+    /**
+     * Tests that calling the RemoveAll function does indeed remove all of the
+     * programmes.
+     */
+    public function testRemoveAll( )
+    {
+
+        // Get an instance of the broadcasts model
+        $programmes = new Programmes( );
+
+        // Remove all details of the broadcasts
+        $programmes->removeAll( );
+
+        // Load up data file with data that should be in the database
+        $xml_dataset = $this->createXMLDataSet( dirname( __FILE__ )
+                                              . DIRECTORY_SEPARATOR . 'datasets'
+                                              . DIRECTORY_SEPARATOR . 'empty.xml' );
+
+        // Check that it is in fact empty
+        $this->assertTablesEqual( $xml_dataset->getTable( 'programmes' ),
+                                  $this->getConnection( )->createDataSet( )->getTable( 'programmes' ) );
 
     }
 

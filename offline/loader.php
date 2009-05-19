@@ -14,7 +14,9 @@ require_once( 'Zend/Config/Ini.php' );
 require_once( 'Zend/Db/Table.php' );
 require_once( 'Zend/Rest/Client.php' );
 require_once( 'Broadcasts.php' );
+require_once( 'Channels.php' );
 require_once( 'Locations.php' );
+require_once( 'Logos.php' );
 require_once( 'Programmes.php' );
 
 $config = new Zend_Config_Ini( APPLICATION_PATH . 'config' . DIRECTORY_SEPARATOR
@@ -24,6 +26,10 @@ $db->query( "SET NAMES 'utf8'" );
 Zend_Db_Table::setDefaultAdapter( $db );
 
 // Get instances of each of the models
+$broadModel = new Broadcasts( );
+$chanModel = new Channels( );
+$locModel = new Locations( );
+$logoModel = new Logos( );
 $progsModel = new Programmes( );
 
 // Set up the REST client to query the BBC
@@ -32,6 +38,13 @@ $client = new Zend_Rest_Client( 'http://www0.rdthdo.bbc.co.uk/cgi-perl/api/query
 // First, we need to get the list of groups.
 $client->method( 'bbc.group.list' );
 $groups = $client->get( );
+
+// Empty out the contents of the current database
+$broadModel->removeAll( );
+$chanModel->removeAll( );
+$locModel->removeAll( );
+$logoModel->removeAll( );
+$progsModel->removeAll( );
 
 // Iterate over the groups found looking for the ones with 'Formula 1' in their
 // name
@@ -75,6 +88,37 @@ foreach( $groups as $group )
 
             // Save the details of the programme
             $progsModel->store( $programmeId, $title, $synopsis );
+
+            foreach( $info->programme[0]->event as $event )
+            {
+
+                // Save the broadcast dates
+                $broadModel->store( $programmeId,
+                                    (string)$event->attributes( )->channel_id,
+                                    (string)$event->start[0],
+                                    (string)$event->duration[0] );
+
+            }
+
+            // Now we need to load the locations up
+            $client->method( 'bbc.programme.getLocations' )
+                   ->programme_id( $programmeId );
+            $locations = $client->get( );
+
+            foreach( $locations->programme[0]->location as $location )
+            {
+                
+                if ( (string)$location->type[0] != 'dvb' )
+                {
+
+                    $locModel->store( $programmeId, (string)$location->type[0],
+                                      (string)$location->url[0],
+                                      (string)$location->start[0],
+                                      (string)$location->duration[0] );
+
+                }
+
+            }
 
         }
 

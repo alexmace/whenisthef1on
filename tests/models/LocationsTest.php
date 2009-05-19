@@ -40,7 +40,7 @@ class LocationsTest extends PHPUnit_Extensions_Database_TestCase
 
     	return $this->createFlatXMLDataSet( dirname( __FILE__ )
                                           . DIRECTORY_SEPARATOR . 'datasets'
-                                          . DIRECTORY_SEPARATOR . 'empty.xml' );
+                                          . DIRECTORY_SEPARATOR . 'basic.xml' );
 
     }
 
@@ -90,12 +90,13 @@ class LocationsTest extends PHPUnit_Extensions_Database_TestCase
 
         // Attempt to store the information about the location
         $locations->store( 'crid://bbc.co.uk/1178643909', 'real-audio',
-                           'http://www.bbc.co.uk/fivelive/live/surestream_sportsextra.ram' );
+                           'http://www.bbc.co.uk/fivelive/live/surestream_sportsextra.ram',
+                           '2009-05-21T07:55:00Z', '01:35:00' );
 
         // Load up data file with data that should be in the database
         $xml_dataset = $this->createFlatXMLDataSet( dirname( __FILE__ )
                                                   . DIRECTORY_SEPARATOR . 'datasets'
-                                                  . DIRECTORY_SEPARATOR . 'empty-after-location-stored.xml' );
+                                                  . DIRECTORY_SEPARATOR . 'basic-after-location-stored.xml' );
 
         // Test that the broadcast has been recorded correctly
         $this->assertTablesEqual( $xml_dataset->getTable( 'locations' ),
@@ -116,13 +117,39 @@ class LocationsTest extends PHPUnit_Extensions_Database_TestCase
 
         // Attempt to store the information about the location
         $locations->store( 'crid://bbc.co.uk/1178643909', 'real-audio',
-                           'http://www.bbc.co.uk/fivelive/live/surestream_sportsextra.ram' );
+                           'http://www.bbc.co.uk/fivelive/live/surestream_sportsextra.ram',
+                           '2009-05-21T07:55:00Z', '01:35:00' );
 
         // Storing it again should cause an exception. Set the expected
         // exception then attempt to store it.
         $this->setExpectedException( 'Zend_Db_Statement_Exception' );
         $locations->store( 'crid://bbc.co.uk/1178643909', 'real-audio',
-                           'http://www.bbc.co.uk/fivelive/live/surestream_sportsextra.ram' );
+                           'http://www.bbc.co.uk/fivelive/live/surestream_sportsextra.ram',
+                           '2009-05-21T07:55:00Z', '01:35:00' );
+
+    }
+
+    /**
+     * Tests that calling the RemoveAll function does indeed remove all of the
+     * locations.
+     */
+    public function testRemoveAll( )
+    {
+
+        // Get an instance of the broadcasts model
+        $locations = new Locations( );
+
+        // Remove all details of the broadcasts
+        $locations->removeAll( );
+
+        // Load up data file with data that should be in the database
+        $xml_dataset = $this->createXMLDataSet( dirname( __FILE__ )
+                                              . DIRECTORY_SEPARATOR . 'datasets'
+                                              . DIRECTORY_SEPARATOR . 'empty.xml' );
+
+        // Check that it is in fact empty
+        $this->assertTablesEqual( $xml_dataset->getTable( 'locations' ),
+                                  $this->getConnection( )->createDataSet( )->getTable( 'locations' ) );
 
     }
 
