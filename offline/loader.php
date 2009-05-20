@@ -46,6 +46,10 @@ $locModel->removeAll( );
 $logoModel->removeAll( );
 $progsModel->removeAll( );
 
+// Create an array to save the channels that have already been recorded in the
+// database
+$savedChannels = array( );
+
 // Iterate over the groups found looking for the ones with 'Formula 1' in their
 // name
 foreach( $groups as $group )
@@ -97,6 +101,28 @@ foreach( $groups as $group )
                                     (string)$event->attributes( )->channel_id,
                                     (string)$event->start[0],
                                     (string)$event->duration[0] );
+
+                if ( array_search( (string)$event->attributes( )->channel_id,
+                                   $savedChannels ) === false ) {
+
+                    $client->method( 'bbc.channel.getInfo' )
+                           ->channel_id( (string)$event->attributes( )->channel_id );
+                    $channel = $client->get( );
+
+                    $chanModel->store( (string)$event->attributes( )->channel_id,
+                                       (string)$channel->channel[0]->attributes( )->name );
+
+                    foreach( $channel->channel[0]->logo as $logo )
+                    {
+
+                        $logoModel->store( (string)$event->attributes( )->channel_id,
+                                           $logo->attributes( )->url );
+
+                    }
+
+                    $savedChannels[] = (string)$event->attributes( )->channel_id;
+
+                }
 
             }
 
